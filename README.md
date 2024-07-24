@@ -25,6 +25,7 @@
 - redux-devtools-extension
 - axios
 - bootstrap
+  - npm i react-bootstrap
   - npm i bootstrap --save
   - import 'bootstrap/dist/css/bootstrap.css';
 - react-bootstrap bootstrap
