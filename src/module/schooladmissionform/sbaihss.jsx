@@ -8,6 +8,7 @@ import Button from "react-bootstrap/Button";
 import '../../script/sbaihss.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import IsRequired from '../../components/IsRequired.jsx';
 
 export default function SBAIHSS() {
     const location = useLocation();
@@ -149,7 +150,7 @@ export default function SBAIHSS() {
                                     <div className="form-group">
                                         <label htmlFor="AppliedClass">
                                             <b>Class in which admission is sought </b>
-                                            <span className="danger">*</span>
+                                            {IsRequired}
                                         </label>
                                         <dropdownlist
                                             className="form-control"
