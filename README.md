@@ -13,6 +13,7 @@
 - React Developer Tools (use debug)
 - Prettier (Code formatter)
 - File on Save (real time changes)
+- ES7 React/Redux/GraphQL/React-Native snippets
 
 # Package Used
 

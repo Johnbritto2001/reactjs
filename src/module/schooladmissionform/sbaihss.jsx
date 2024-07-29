@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
 import '../../content/sbaihss.css';
 import logo from '../../images/SBAIHSS/logo.jpg'
 import donbosco from '../../images/SBAIHSS/donbosco.png'
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import '../../script/sbaihss.js';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import IsRequired from '../../components/IsRequired.jsx';
+import Input from '../../components/ui/Input.jsx';
 
 export default function SBAIHSS() {
     const location = useLocation();
@@ -20,6 +19,12 @@ export default function SBAIHSS() {
     console.log("Age : " + age);
 
     const notify = () => toast("Wow so easy!");
+    const [year, SetYear] = useState(2024);
+
+    function IncYear() {
+        // SetYear(year + 1)
+        SetYear(year => year + 1)
+    }
     return (
         <>
             <header id="masthead" className="site-header" role="banner">
@@ -120,7 +125,7 @@ export default function SBAIHSS() {
                     </div>
                 </div>
             </header>
-            <form
+            <form onSubmit={(e) => e.preventDefault()}
                 className="card"
                 id="form" style={{
                     backgroundColor: "#cfcfcf33",
@@ -132,6 +137,15 @@ export default function SBAIHSS() {
                 }}
                 autoComplete="off" >
                 <br />
+                <div className='row'>
+                    <div className='col-md-4'></div>
+                    <div className='col-md-4'>
+                        <h3>Online Admission <span>{year}</span></h3>
+                    </div>
+                    <div className='col-md-4'>
+                        <button onClick={IncYear}>+</button>
+                    </div>
+                </div>
                 <div>
                     <div id="newregister" >
                         <div className="form-body">
@@ -148,10 +162,7 @@ export default function SBAIHSS() {
                             <div className="row">
                                 <div className="col-md-4">
                                     <div className="form-group">
-                                        <label htmlFor="AppliedClass">
-                                            <b>Class in which admission is sought </b>
-                                            {IsRequired}
-                                        </label>
+                                        <Input label={"Class in which admission is sought"} isRequired></Input>
                                         <dropdownlist
                                             className="form-control"
                                             cssclass="custom-select form-control"
@@ -161,25 +172,17 @@ export default function SBAIHSS() {
                                 </div>
                                 <div className="col-md-4">
                                     <div className="form-group">
-                                        <label htmlFor="namepupil">
-                                            <b>Name of the Student</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
+                                        <Input label={"Name of the Student"} isRequired={false} />
                                         <input type='text' className="form-control"
                                             id="txtname"
                                             style={{ textTransform: "uppercase" }}
                                             cssclass="form-control"
-
                                         />
                                     </div>
                                 </div>
                                 <div className="col-md-4">
                                     <div className="form-group">
-                                        <label htmlFor="namepupil">
-                                            <b>Student Name in Tamil</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-
+                                        <Input label={"Student Name in Tamil"} isRequired />
                                         <input type='text'
                                             id="stutamilname"
                                             maxLength={35}
@@ -193,10 +196,7 @@ export default function SBAIHSS() {
                                 </div>
                                 <div className="col-md-4">
                                     <div className="form-group">
-                                        <label htmlFor="DOB">
-                                            <b>Date of Birth </b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
+                                        <Input label={"Date of Birth"} />
                                         <input
                                             className="form-control"
                                             type="date"
@@ -209,9 +209,7 @@ export default function SBAIHSS() {
                                 </div>
                                 <div className="col-md-4">
                                     <div className="form-group">
-                                        <label htmlFor="Gender">
-                                            <b>Gender </b>
-                                        </label>
+                                        <Input label={"Gender"} isRequired />
                                         <dropdownlist
                                             className="form-control"
                                             cssclass="form-control"
@@ -250,47 +248,6 @@ export default function SBAIHSS() {
                                         />
                                     </div>
                                 </div>
-                                <div className="col-md-4">
-                                    <div className="form-group">
-                                        <label >
-                                            <b> Disability</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <dropdownlist
-                                            id="disability" className="form-control"
-                                            style={{ textTransform: "uppercase" }}
-                                            cssclass="form-control"
-                                            width="100%"
-                                            data-toggle="tooltip"
-                                            onchange="Disability()"
-                                        >
-                                            <listitem
-                                                text="--None Selected--"
-                                                value={0}
-                                                selected="True"
-                                            />
-                                            <listitem text="Yes" value={1} />
-                                            <listitem text="No" value={2} />
-                                        </dropdownlist>
-                                    </div>
-                                </div>
-                                <div className="col-md-4" id="disabilites">
-                                    <div className="form-group">
-                                        <label htmlFor="namepupil">
-                                            <b>If Yes, Give Disability details</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <input type='text' className="form-control"
-                                            id="disabilitydt"
-                                            maxLength={30}
-                                            style={{ textTransform: "uppercase" }}
-                                            cssclass="form-control"
-                                            onkeypress="return isAlphabeticOrSpace(event)"
-                                            onpaste="validateAlphabetic(event)"
-                                        />
-                                    </div>
-                                </div>
-
                                 <div className="col-md-4">
                                     <div className="form-group">
                                         <label >
@@ -531,100 +488,6 @@ export default function SBAIHSS() {
                                             style={{ textTransform: "uppercase" }}
                                             cssclass="form-control"
                                             id="emisno"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-md-4">
-                                    <div className="form-group">
-                                        <label htmlFor="DAbled">
-                                            <b> Siblings are Studying in this School?</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <dropdownlist
-                                            className="form-control"
-                                            id="sibliings"
-                                            cssclass="form-control"
-                                            width="100%"
-                                            data-toggle="tooltip"
-                                            autopostback="true"
-                                            onselectedindexchanged="sibliings_SelectedIndexChanged"
-                                        >
-                                            <listitem
-                                                text="--None Selected--"
-                                                value={0}
-                                                selected="True"
-                                            />
-                                            <listitem text="Yes" value={1} />
-                                            <listitem text="No" value={2} />
-                                        </dropdownlist>
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="form-group">
-                                        <label
-
-                                            htmlFor="IM2"
-                                            style={{ color: "black" }}
-                                        >
-                                            <b> Landmark Near the Residence</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <input type='text'
-                                            id="reslandmark"
-                                            textmode="MultiLine"
-                                            rows={1}
-                                            className="form-control"
-                                            maxLength={100}
-                                            style={{ textTransform: "uppercase" }}
-                                            cssclass="form-control"
-                                            onkeydown="upperCaseF(this)"
-                                            onpaste="validatePasteAdress(this, event)"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="form-group">
-                                        <label
-
-                                            htmlFor="IM2"
-                                            style={{ color: "black" }}
-                                        >
-                                            <b> Present Address</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <input type='text'
-                                            textmode="MultiLine"
-                                            rows={1}
-                                            className="form-control"
-                                            maxLength={100}
-                                            style={{ textTransform: "uppercase" }}
-                                            cssclass="form-control"
-                                            id="presentaddress"
-                                            onkeydown="upperCaseF(this)"
-                                            onpaste="validatePasteAdress(this, event)"
-                                        />
-                                    </div>
-                                </div>
-                                <div className="col-md-12">
-                                    <div className="form-group">
-                                        <label
-
-                                            htmlFor="IM2"
-                                            style={{ color: "black" }}
-                                        >
-                                            <b> Permanent Address</b>
-                                            <span className="danger">&nbsp;*</span>
-                                        </label>
-                                        <input type='text'
-                                            textmode="MultiLine"
-                                            rows={1}
-                                            className="form-control"
-                                            maxLength={100}
-                                            style={{ textTransform: "uppercase" }}
-                                            cssclass="form-control"
-                                            id="permanentaddress"
-                                            onkeydown="upperCaseF(this)"
-                                            onpaste="validatePasteAdress(this, event)"
                                         />
                                     </div>
                                 </div>

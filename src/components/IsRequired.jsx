@@ -1,10 +1,12 @@
 import React from 'react'
 
-const IsRequired = () => {
+const IsRequired = ({ label, isRequired = false }) => {
+  debugger
   return (
-    <div>
-        <span className="danger">&nbsp;*</span>
-    </div>
+    <label className=''>
+      <b>{label}</b>
+      {isRequired == true ? <span>*</span> : null}
+    </label>
   )
 }
 
