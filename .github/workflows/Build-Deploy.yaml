@@ -1,0 +1,35 @@
+name: Build & Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "Select branch to build"
+        required: true
+        default: main
+      target:
+        description: "Target branch (optional)"
+        required: false
+        default: ""
+  push:
+    branches:
+      - "*"       # runs on push for any branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout selected branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Display branch info
+        run: |
+          echo "Building branch: ${{ github.event.inputs.branch }}"
+          echo "Target: ${{ github.event.inputs.target }}"
+
+      - name: Build & Deploy API Call
+        run: |
+          curl -X POST "https://mobile.smartschoolplus.co.in/webservice/sspmobileservice.asmx/BuildDeploy" \
+            -F "branch=${{ github.event.inputs.branch }}"
